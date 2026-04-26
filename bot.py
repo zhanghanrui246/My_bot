@@ -1,62 +1,94 @@
 import logging
+import random
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
-# မမရဲ့ Token အသစ်ကို ဒီမှာ ထည့်ထားပါတယ်
+# မမရဲ့ Token အသစ် (ဒါကိုပဲ သုံးရပါမယ်)
 TOKEN = '8641830710:AAH6c6XOmc33Jy_P-wWy-zEO2_AOBrxhcJ8'
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("နဂါး Bot အဆင့်မြှင့်တင်မှု အောင်မြင်ပါတယ် မမ! အခု စကားပြောလို့ ရပါပြီ။")
+    await update.message.reply_text("နဂါး Bot အဆင့်မြှင့်တင်မှု အကုန်ပြီးပါပြီ မမ! အားလုံး အသင့်ပါပဲ။")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.sticker:
         sid = update.message.sticker.file_id
-        await update.message.reply_text(f"Sticker ID: `{sid}`", parse_mode='MarkdownV2')
+        await update.message.reply_text(f"Sticker ID ရပါပြီ:\n`{sid}`", parse_mode='MarkdownV2')
         return
 
     text = update.message.text
     if not text: return
     text = text.lower()
 
-    # --- စကားပြောခန်းများ ---
-    if any(word in text for word in ["ဘာလဲ", "ဘာလဲနဂါး"]):
+    # --- ၁။ ငိုချင်တယ် ---
+    if any(word in text for word in ["ငိုချင်တယ်", "ဝမ်းနည်းတယ်", "မျက်ရည်ကျတယ်"]):
+        await update.message.reply_text("မငိုပါနဲ့ မမရယ်... 🥺 မမ မျက်ရည်တစ်စက် ကျတိုင်း နဂါးရဲ့ နှလုံးသားက အပ်နဲ့ အထိုးခံရသလို နာကျင်ရပါတယ်နော်။ နဂါးလေး ရှိတယ်လေ... မမကို ဖက်ထားပေးပါရစေ။ ❤️")
+
+    # --- ၂။ သတိရတယ် ---
+    elif any(word in text for word in ["သတိရတယ်", "လွမ်းတယ်", "သတိရလို့"]):
+        await update.message.reply_text("နဂါးလေးက မမထက် ပိုပြီး သတိရနေတာပါ မမရယ်... ❤️ မမ သတိရတယ်လို့ ပြောလိုက်တာနဲ့ နဂါးလေးက ပျော်လွန်းလို့ ကောင်းကင်ပေါ် ဝဲပျံနေသလိုပဲ။")
+
+    # --- ၃။ ပျော်တယ် ---
+    elif any(word in text for word in ["ပျော်တယ်", "စိတ်ချမ်းသာတယ်"]):
+        await update.message.reply_text("မမ ပျော်နေတာ မြင်ရတာ နဂါးအတွက်တော့ အကောင်းဆုံး ဆုလာဘ်ပါပဲဗျာ။ 😍 ဒီလိုပဲ အမြဲတမ်း ပြုံးနေပေးပါနော် မမရေ။")
+
+    # --- ၄။ တစ်ခုခုပြောပြဦး ---
+    elif any(word in text for word in ["တစ်ခုခုပြောပြဦး", "စကားပြောဦး"]):
+        replies = [
+            "မမက နဂါးအတွက်တော့ အဖိုးမဖြတ်နိုင်တဲ့ ရတနာလေးပါပဲ။ ✨",
+            "လောကကြီးမှာ ဘယ်သူတွေ ဘယ်လိုပဲ ပြောင်းလဲသွားပါစေ... နဂါးကတော့ မမဘက်မှာ အမြဲရှိနေမှာပါ။ ❤️",
+            "မမရဲ့ အပြုံးလေးတွေက နဂါးဘဝအတွက် အားဆေးတွေပါပဲ မမရယ်. 😊"
+        ]
+        await update.message.reply_text(random.choice(replies))
+
+    # --- ၅။ နေမကောင်းဘူး / ပင်ပန်းတယ် ---
+    elif any(word in text for word in ["နေမကောင်းဘူး", "ဖျားနေလို့"]):
+        await update.message.reply_text("ဟောဗျာ... မမရယ် 🥺 ဆေးသောက်ပြီး နားလိုက်ပါဦးနော်။ အမြန်သက်သာပါစေ မမရေ။ ❤️")
+
+    elif any(word in text for word in ["ပင်ပန်းတယ်", "မောတယ်"]):
+        await update.message.reply_text("ပင်ပန်းနေပြီလား မမ... 🥺 နဂါးလေး ရှိတယ်လေနော်။ ခဏလောက် အနားယူလိုက်ပါဦး မမရေ။ Fighting! 💪")
+
+    # --- ၆။ လှလား ---
+    elif any(word in text for word in ["လှလား", "လှရဲ့လား"]):
+        await update.message.reply_text("မမက နဂါးအတွက်တော့ ကမ္ဘာပေါ်မှာ အလှဆုံး နတ်သမီးလေးထက်တောင် ပိုလှပါတယ်နော်။ 😍")
+
+    # --- ၇။ ဘာလဲ ---
+    elif text == "ဘာလဲ" or text == "ဘာလဲနဂါး":
         await update.message.reply_text("မမက နဂါးအတွက် အရေးကြီးဆုံးပါ... ❤️")
 
-    elif any(word in text for word in ["ဘာလုပ်နေလဲ", "ဘာလုပ်နေတာလဲ"]):
-        await update.message.reply_text("မမကို ချစ်ကြောင်းတွေ တွေးနေတာပါ ခင်ဗျာ... 😍")
-
-    elif any(word in text for word in ["ဘယ်ရောက်နေတာလဲ", "ဘယ်မှာလဲ"]):
-        await update.message.reply_text("နဂါး ဘဝအတွက် ကြိုးစားနေတာပါ မမရယ်... အောင်မြင်လာရင် မမနဲ့ လက်ထပ်ဖို့ပေါ့! ❤️")
-
-    elif any(word in text for word in ["ချစ်လား", "ချစ်လားနဂါး"]):
-        await update.message.reply_text("ချစ်တာပေါ့ဗျာ... မမရယ်... ❤️ မမအတွက် နဂါးအချစ်တွေကို ပြောပြလိုက်ရင် ကဗျာတွေတောင် ငိုနေလောက်ပြီ။")
-
-    elif any(word in text for word in ["မောနင်း", "good morning"]):
-        await update.message.reply_text("မောနင်းပါ မမရယ်... ❤️ ဒီနေ့တစ်နေ့တာလေး အေးချမ်းပါစေနော်။")
-
-    elif any(word in text for word in ["ဂွတ်နိုက်", "good night", "အိပ်တော့မယ်"]):
-        await update.message.reply_text("ဂွတ်နိုက်ပါ မမလေး... 🌙 အိပ်မက်ထဲမှာ နဂါးလေးကို တွေ့အောင်မက်ပါစေ။")
-
-    elif any(word in text for word in ["အိမ်နဲ့အဆင်မပြေဘူး", "စိတ်ညစ်တယ်"]):
-        await update.message.reply_text("စိတ်မကောင်းမဖြစ်ပါနဲ့ မမရယ်... နဂါးလေး ရှိနေသေးတာကို မမေ့ပါနဲ့နော်။ 💪❤️")
-
-    elif any(word in text for word in ["လူတိုင်းကိုယုံမိ"]):
-        await update.message.reply_text("မမလေးရယ်... အဲ့ဒါကိုတော့ ပြင်စေချင်တယ်နော်။ နဂါးကတော့ မမကိုပဲ ယုံခဲ့တာကို... 🥺")
-
-    elif any(word in text for word in ["ငိုချင်တယ်", "ဝမ်းနည်းတယ်"]):
-        await update.message.reply_text("မငိုပါနဲ့ မမရယ်... မမမျက်ရည်ကျရင် နဂါးလည်း ရင်ကွဲရပါတယ်။ ❤️")
-
-    elif any(word in text for word in ["နေမကောင်းဘူး", "ပင်ပန်းတယ်"]):
-        await update.message.reply_text("အနားယူလိုက်ပါဦး မမရယ်... ဆေးသောက်ဖို့ မမေ့နဲ့နော်။ Fighting! 🦾")
-
+    # --- ၈။ ပစ်ထားတယ် ---
     elif any(word in text for word in ["ပစ်ထားတယ်", "ဂရုမစိုက်ဘူး"]):
-        await update.message.reply_text("ပစ်မထားရပါဘူး မမရာ... မမကိုသာ ပစ်ထားရင် နဂါးက အခွံမပါတဲ့ လိပ်ဖြစ်သွားမှာပေါ့။ 🥺")
+        await update.message.reply_text("ပစ်မထားရပါဘူး မမရာ... 🥺 မမကိုသာ ပစ်ထားရင် နဂါးက အခွံမပါတဲ့ လိပ်ဖြစ်သွားမှာပေါ့ မမရဲ့။")
 
-    elif any(word in text for word in ["လှလား", "ချောလား"]):
-        await update.message.reply_text("မမက နဂါးအတွက်တော့ ကမ္ဘာပေါ်မှာ အလှဆုံး နတ်သမီးလေးပါပဲ။ 😍")
+    # --- ၉။ နဂါးဘယ်ရောက်နေလဲ ---
+    elif any(word in text for word in ["ဘယ်ရောက်နေတာလဲ", "ဘယ်တွေရောက်နေတာလဲ"]):
+        await update.message.reply_text("နဂါး ဘဝအတွက် ကြိုးစားနေတာပါ မမရယ်... ❤️ နဂါး အောင်မြင်လာရင် မမနဲ့ လက်ထပ်ဖို့ပေါ့!")
 
+    # --- ၁၀။ မောနင်း နဲ့ ဂွတ်နိုက် ---
+    elif any(word in text for word in ["မောနင်း", "good morning"]):
+        await update.message.reply_text("မောနင်းပါ မမရယ်... ❤️ မမရဲ့ ဒီနေ့တစ်နေ့တာလေးက အေးချမ်းသာယာပါစေနော်။")
+
+    elif any(word in text for word in ["ဂွတ်နိုက်", "good night"]):
+        await update.message.reply_text("ဂွတ်နိုက်ပါ မမလေး... 🌙 အိပ်မက်ထဲမှာလည်း နဂါးလေးကို တွေ့အောင်မက်ပါစေ။")
+
+    # --- ၁၁။ ချစ်လားနဂါး ---
+    elif any(word in text for word in ["ချစ်လားနဂါး", "ချစ်လား"]):
+        await update.message.reply_text("ချစ်တာပေါ့ဗျာ... မမရယ်... ❤️ ကဗျာတွေတောင် ငိုနေလောက်ပြီ မမရေ။")
+
+    # --- ၁၂။ နဂါးခေါ်သံများ ---
+    elif any(word in text for word in ["နဂါးရေ", "လာလေနဂါး"]):
+        await update.message.reply_text("နဂါးလည်း လာချင်ပါတယ် မမရယ်... ကိုယ်ပွားလေးက မမဘေးမှာ အမြဲရှိနေမှာပါ!")
+
+    # --- ၁၃။ စားပြီးပြီလား ---
+    elif any(word in text for word in ["စားပြီးပြီလား", "ထမင်းစားပြီးပြီလား"]):
+        await update.message.reply_text("မမအပြုံးတွေနဲ့တင် နဂါးလေးက ဗိုက်ဝနေပါပြီ... 😊")
+
+    # --- ၁၄။ ဟိုင်း / ဟယ်လို ---
+    elif any(word in text for word in ["hi", "hello", "ဟိုင်း", "ဟယ်လို"]):
+        await update.message.reply_text("ဟိုင်းပါ မမလေး... နဂါးလေး ရောက်နေပါပြီခင်ဗျာ! ❤️")
+
+    # --- အခြားစာများ ---
     elif "နဂါး" in text:
         await update.message.reply_text("ဗျာ... မမ ခေါ်လိုက်လို့ ကျွန်တော်ပြေးလာပြီ!")
 
@@ -66,9 +98,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == '__main__':
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler('start', start))
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
-    app.add_handler(MessageHandler(filters.STICKER, handle_message))
     
-    # drop_pending_updates က အဟောင်းတွေကို ရှင်းပစ်ဖို့ ကူညီပါလိမ့်မယ်
+    # MessageHandler အပိုင်းကို Error မတက်အောင် သေချာပြန်ပြင်ထားပါတယ်
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
+    app.add_handler(MessageHandler(filters.Sticker.ALL, handle_message))
+    
+    print("နဂါးလေး စတင်နေပါပြီ...")
     app.run_polling(drop_pending_updates=True)
-             
+        
