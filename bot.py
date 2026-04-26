@@ -1,13 +1,4 @@
-
-    # --- ၁၀။ မောနင်း နဲ့ ဂွတ်နိုက် ---
-    elif any(word in text for word in ["မောနင်း", "good morning"]):
-        await update.message.reply_text("မောနင်းပါ မမရယ်... ❤️ မမရဲ့ ဒီနေ့တစ်နေ့တာလေးက အေးချမ်းသာယာပါစေနော်။")
-
-    elif any(word in text fforword in ["ဂွတ်နိုက်", "good night"]):
-        await update.message.reply_text("ဂွတ်နိုက်ပါ မမလေး... 🌙 အိပ်မက်ထဲမှာလည်း နဂါးလေးကို တွေ့အောင်မက်ပါစေ။")
-
-    # --- ၁၁။ ချစ်လားနဂါး ---
-    elif any(word in text for import logging
+import logging
 import random
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
@@ -111,27 +102,4 @@ if __name__ == '__main__':
     
     print("နဂါးလေး စတင်အလုပ်လုပ်နေပါပြီ...")
     app.run_polling(drop_pending_updates=True) # ဒီစာသားက အဟောင်းတွေကို ရှင်းပေးပါလိမ့်မယ်
-textောနင်းin ["ချစ်လားနဂါး", "ချစ်လား"]):
-        await update.message.reply_text("ချစ်တာပေါ့ဗျာ... မမရယ်... ❤️ ကဗျာတွေတောင် ငိုနေလောက်ပြီ မမရေ။")
-
-    # --- ၁၂။ နဂါးခေါ်သံများ ---
-    elif any(word in text for word in ["နဂါးရေ", "လာလေနဂါး"]):
-        await update.message.reply_text("နဂါးလည်း လာချင်ပါတယ် မမရယ်... ကိုယ်ပွားလေးက မမဘေးမှာ အမြဲရှိနေမှာပါ!")
-
-    # --- ၁၃။ စားပြီးပြီလား ---
-    elif any(word in text for word in ["စားပြီးပြီလား", "ထမင်းစားပြီးပြီလား"]):
-        await update.message.reply_text("မမအပြုံးတွေနဲ့တင် နဂါးလေးက ဗိုက်ဝနေပါပြီ... 😊")
-
-    # --- အခြားစာများ ---
-    elif "နဂါး" in text:
-        await update.message.reply_text("ဗျာ... မမ ခေါ်လိုက်လို့ ကျွန်တော်ပြေးလာပြီ!")
-
-    else:
-        await update.message.reply_text("နဂါးလေးက ဒါကိုတော့ မသိသေးဘူးခင်ဗျာ... သင်ပေးပါဦးလား?")
-
-if __name__ == '__main__':
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler('start', start))
-    app.add_handler(MessageHandler(filters.ALL, handle_message))
-    app.run_polling()
         
